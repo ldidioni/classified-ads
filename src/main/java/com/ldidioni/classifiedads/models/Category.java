@@ -19,4 +19,24 @@ public class Category
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category") //TODO: check!!!
     private List<Ad> ads;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Ad> getAds() {
+        return ads;
+    }
+
+    public void setAds(List<Ad> ads) {
+        this.ads = ads;
+    }
 }

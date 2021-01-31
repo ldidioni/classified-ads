@@ -19,4 +19,24 @@ public class Tag
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ad_id")
     private Ad ad;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
+    }
 }
