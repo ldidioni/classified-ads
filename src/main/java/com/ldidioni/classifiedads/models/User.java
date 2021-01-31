@@ -37,7 +37,7 @@ public class User
     private double rating;
 
     @Column
-    private int rated_by_nb_users;
+    private int ratings_nb;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id")) //TODO: invert join & inverseJoin? https://www.baeldung.com/spring-data-rest-relationships
@@ -45,6 +45,15 @@ public class User
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seller") //TODO: check!!!
     private List<Ad> ads;
+
+    /**
+     * Function called every time a new rating is received to update the rating and the number of ratings received
+     * @param latestRating
+     */
+    public void updateRating(double latestRating) {
+        this.rating =  (this.rating  * this.ratings_nb + latestRating) / (this.ratings_nb + 1);
+        this.ratings_nb = this.ratings_nb + 1;
+    }
 
     public int getId() {
         return id;
@@ -90,12 +99,12 @@ public class User
         this.rating = rating;
     }
 
-    public int getRated_by_nb_users() {
-        return rated_by_nb_users;
+    public int getRatings_nb() {
+        return ratings_nb;
     }
 
-    public void setRated_by_nb_users(int rated_by_nb_users) {
-        this.rated_by_nb_users = rated_by_nb_users;
+    public void setRatings_nb(int ratings_nb) {
+        this.ratings_nb = ratings_nb;
     }
 
     public Set<Role> getRoles() {
