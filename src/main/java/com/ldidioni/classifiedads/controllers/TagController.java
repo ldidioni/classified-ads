@@ -47,20 +47,20 @@ public class TagController
     @GetMapping("/tags/{id}")
     public String seeTag(@PathVariable("id")int id, Model model)
     {
-        Optional<Tag> tag = tagRepository.findById(id);
+        Tag tag = tagRepository.getOne(id);
         model.addAttribute("tag", tag);
 
         return "tags/form";
     }
-/*
+
     @PostMapping("/tags/{id}")
     public String updateTag(@PathVariable("id")int id, @ModelAttribute Tag tag)
     {
         tagRepository.findById(id).ifPresent(existingTag -> tagService.update(existingTag.getId(), tag));
 
-        return "redirect:/tags/index";
+        return "redirect:/tags";
     }
-*/
+
     @DeleteMapping("/tags/{id}")
     public String deleteTag(@PathVariable("id")int id)
     {

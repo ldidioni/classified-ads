@@ -4,13 +4,14 @@
     <body>
         <div class="container">
             <div th:replace="fragments/navigation.html"></div>
-            <h1>Create a new tag</h1>
-            <form th:action="@{/tags/new}" method="post">
+            <h1 th:text="${tag.id} ? 'Update tag with id #' + ${tag.id} : 'Create a new tag'"></h1>
+            <form th:action="${tag.id} ? @{/tags/{id}(id=${tag.id})} : @{/tags/new}" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" th:placeholder="${tag.name} ?: 'Enter a name for the tag'" class="form-control" required />
+                    <input type="text" id="name" name="name" class="form-control"
+                           th:placeholder="${tag.name} ?: 'Enter a name for the tag'" th:value="${tag.name} ?: ''" required/>
                 </div>
-                <button type="submit" class="btn btn-primary">Create tag</button>
+                <button type="submit" class="btn btn-primary" th:text="${tag.id} ? 'Update tag' : 'Create tag'"></button>
             </form>
             <div th:replace="fragments/footer.html"></div>
         </div>
