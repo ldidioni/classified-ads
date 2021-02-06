@@ -19,12 +19,23 @@ INSERT INTO user_roles (user_id, role_id) VALUES
      (5, 1);
 
 INSERT INTO categories (name) VALUES
-    ('Véhicules'),
-    ('Biens immobiliers'),
-    ('Jeux pour enfants');
+    ('Automobile'),
+    ('Immobilier'),
+    ('Vêtements'),
+    ('Equipements sportif');
 
 INSERT INTO ads (title, description, asked_price, seller_id, category_id) VALUES
-    ('Vends BMW serie 3', 'Je vends ma voiture chérie de la marque à l\'hélice.', 32000, 3, 1),
+    ('Vends BMW serie 3', 'Je vends ma voiture chérie de la marque à l\'hélice.', 32000, 1, 1),
     ('Vends Alfa Giulia', 'Je vends mon pure sang italien aux 500 chevaux.', 58000, 4, 1),
-    ('Vends duplex vue lac Léman', 'Je vends mon appartement en duplex avec vue spectaculaire.', 1450000, 4, 2),
-    ('Vends chalet de montagne', 'Je vends mon chalet familial situé au pied des pistes.', 825000, 5, 2);
+    ('Vends duplex vue lac Léman', 'Je vends mon appartement en duplex avec vue spectaculaire.', 1450000, 2, 2),
+    ('Vends maison de ville', 'Je vends ma maison située à deux pas de la gare de Neuchâtel.', 160000, 3, 2),
+    ('Vends chalet de montagne', 'Je vends mon chalet familial situé au pied des pistes.', 825000, 4, 2),
+    ('Vends robe de gala', 'Je vends une robe de soirée en parfait état.', 400, 5, 3),
+    ('Vends vélo de course', 'Je vends mon vélo en carbone avec seulement 2000 km au compteur.', 750, 1, 4),
+    ('Vends banc de musculation', 'Je vends mon équipement de musculation, idéal pour rester en forme durant l\'hiver.', 200, 4, 4);
+
+INSERT INTO tags (name) VALUES
+    ('Neuf'),
+    ('Occasion'),
+    ('Rare'),
+    ('Urgent');

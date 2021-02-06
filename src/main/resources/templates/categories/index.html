@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments/header.html"></div>
+    <div th:replace="fragments/header.html"></div>
     <body>
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
-            <h1>Index of Categories</h1>
+            <h1>Index of categories</h1>
             <div>
                 <p>
                     Here admins can manage categories available to users of the application.
                 </p>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>edit</th>
-                        <th>delete</th>
-                    </tr>
+            <table class="table table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="category : ${categories}">
-                        <td th:text="${category.id}"></td>
-                        <td th:text="${category.name}"></td>
-                        <td><a th:text="'Edit category'" th:href="@{/categories/{id}(id=${category.id})}" /></td>
-                        <td><a th:text="'Delete category'" th:href="@{/categories/{id}(id=${category.id})}" th:method="delete"/></td>
-                    </tr>
+                <tr th:each="category : ${categories}">
+                    <td th:text="${category.id}"></td>
+                    <td th:text="${category.name}"></td>
+                    <td><a th:text="'Edit category'" th:href="@{/categories/{id}(id=${category.id})}" /></td>
+                    <td>
+                        <form action="#" th:action="@{/categories/{id}(id=${category.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-link" th:text="'Delete category'"></button>
+                        </form>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <div>
-                <a th:text="Create new category" th:href="@{categories/new}" class="btn btn-primary" />
+                <a th:text="'Create new category'" th:href="@{categories/new}" class="btn btn-primary" />
             </div>
             <div th:replace="fragments/footer.html"></div>
         </div>
