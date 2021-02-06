@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Create a new ad</h1>
+            <form th:action="@{/ads/new}" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" th:placeholder="${ad.title}" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" id="description" name="description" th:placeholder="${ad.description}"
+                           class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="priceAsString" class="form-label">Sell price:</label>
+                    <input type="text" id="priceAsString" name="priceAsString" th:placeholder="${ad.price} ?: 0"
+                           class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category:</label>
+                    <select id="category" name="category" th:field="${ad.category}" class="form-control">
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Photo URLs (optional, you might link up to 3 photos):</label>
+                    <input th:each="i : ${#numbers.sequence(0, 2)}" type="url" id="photo_${id}" name="photo_${id}"
+                           th:placeholder="'http://example.com'" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="tags" class="form-label">Tags:</label>
+                    <select id="tags" name="tags" th:field="*{tags}" multiple="multiple" class="form-control">
+                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create ad</button>
+            </form>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container mt-sm-3">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Index of Ads</h1>
+            <div>
+                <p>
+                    Search bar goes here!
+                </p>
+            </div>
+            <div>
+                <div th:each="ad : $ads}" class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="${ad.photos[0]}" alt="photo for ${ad.title}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${ad.title}">Card title</h5>
+                                <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted" th:text="CHF ${ad.asked_price}">CHF 1234</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>description</th>
+                    <th>asked_price</th>
+                    <th>seller</th>
+                    <th>category</th>
+                    <th>photos</th>
+                    <th>tags</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ad : $ads}">
+                    <td th:text="${ad.id}"></td>
+                    <td th:text="${ad.name}"></td>
+                    <td><a th:text="Edit ad" th:href="@{/ads/ ${ad.getId()}" /></td>
+                    <td>
+                        <form method="POST" th:action="@{/ads/ ${ad.getId()}">
+                            <button type="submit" name="submit" value="value">Delete ad</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:text="Create new tag" th:href="@{tags/new}" class="btn btn-primary" />
+            </div>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

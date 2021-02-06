@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Create a new category</h1>
+            <form th:action="@{/categories/new}" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" id="name" name="name" th:placeholder="${category.name} ?: 'Enter a name for the category'" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Create category</button>
+            </form>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

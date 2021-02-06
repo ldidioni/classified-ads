@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container mt-sm-3">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Index of Users</h1>
+            <div>
+                <p>
+                    Here admins can visualize all users of the application and delete them.
+                </p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>username</th>
+                        <th>e-mail</th>
+                        <th>rating</th>
+                        <th>number of ratings</th>
+                        <th>delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.rating}"></td>
+                        <td th:text="${user.ratingsNb}"></td>
+                        <td>
+                            <form method="POST" th:action="@{/users/ ${user.id}">
+                                <button type="submit" name="submit" value="value">Delete user</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

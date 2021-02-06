@@ -2,6 +2,7 @@ package com.ldidioni.classifiedads.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Entity
 @Table(name = "tags")
@@ -16,9 +17,15 @@ public class Tag
     @NotEmpty(message = "*Please provide a name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="ad_id")
-    private Ad ad;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    private Set<Ad> ads;
+
+    public Tag(@NotEmpty(message = "*Please provide a name") String name)
+    {
+        this.name = name;
+    }
+
+    public Tag() { }
 
     public int getId() {
         return id;
@@ -32,11 +39,15 @@ public class Tag
         this.name = name;
     }
 
-    public Ad getAd() {
-        return ad;
+    public Set<Ad> getAds() {
+        return ads;
     }
 
-    public void setAd(Ad ad) {
-        this.ad = ad;
+    public void setAds(Set<Ad> ads) {
+        this.ads = ads;
+    }
+
+    public void linkAd(Ad ad) {
+        this.ads.add(ad);
     }
 }

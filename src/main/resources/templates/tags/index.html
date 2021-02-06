@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container mt-sm-3">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Index of Tags</h1>
+            <div>
+                <p>
+                    Here admins can manage tags available to users of the application.
+                </p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>edit</th>
+                        <th>delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tag : ${tags}">
+                        <td th:text="${tag.id}"></td>
+                        <td th:text="${tag.name}"></td>
+                        <td><a th:text="'Edit tag'" th:href="@{/tags/{id}(id=${tag.id})}" /></td>
+                        <td><a th:text="'Delete tag'" th:href="@{/tags/{id}(id=${tag.id})}" th:method="delete"/></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:text="'Create new tag'" th:href="@{tags/new}" class="btn btn-primary" />
+            </div>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

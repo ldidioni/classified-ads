@@ -20,6 +20,11 @@ public class Category
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category") //TODO: check!!!
     private List<Ad> ads;
 
+    public Category(@NotEmpty(message = "*Please provide a name") String name)
+    {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

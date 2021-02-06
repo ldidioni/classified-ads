@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container mt-sm-3">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1>Index of Ads</h1>
+            <div>
+                <p>
+                    Search for an ad:
+                </p>
+                <form th:action="@{/ads/search}" method="post">
+                    <div class="form-group">
+                        <label for="query">Title:</label>
+                        <input type="text" id="query" name="query" th:placeholder="'Enter your query...'" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category" name="category" th:field="*{searchedAd.category}">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags:</label>
+                        <select id="tags" name="tags" th:field="*{searchedAd.tags}" multiple="multiple">
+                            <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search ad</button>
+                </form>
+            </div>
+            <div>
+                <div th:each="ad : ${ads}" class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="${ad.photos[0]}" alt="photo for ${ad.title}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${ad.title}">Card title</h5>
+                                <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text
+                                    below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted" th:text="CHF ${ad.price}">CHF 1234</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>

@@ -20,24 +20,24 @@ public class User
     @NotEmpty(message = "*Please provide your username")
     private String username;
 
-    @Column
+    @Column(name = "password_hash")
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
-    private String password_hash;
+    private String password;
 
     @Column
     @Email(message = "*Please provide a valid e-mail address")
     @NotEmpty(message = "*Please provide an e-mail address")
-    private String email_address;
+    private String email;
 
-    @Column
-    private String phone_number;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column
     private double rating;
 
-    @Column
-    private int ratings_nb;
+    @Column(name = "ratings_nb")
+    private int ratingsNb;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id")) //TODO: invert join & inverseJoin? https://www.baeldung.com/spring-data-rest-relationships
@@ -46,13 +46,39 @@ public class User
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seller") //TODO: check!!!
     private List<Ad> ads;
 
+    public User(@NotEmpty(message = "*Please provide your username") String username,
+                @Length(min = 5, message = "*Your password must have at least 5 characters")
+                @NotEmpty(message = "*Please provide your password") String password,
+                @Email(message = "*Please provide a valid e-mail address")
+                @NotEmpty(message = "*Please provide an e-mail address") String email,
+                String phoneNumber)
+    {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.rating = 0;
+        this.ratingsNb = 0;
+    }
+
+    public User(@NotEmpty(message = "*Please provide your username") String username,
+                @Length(min = 5, message = "*Your password must have at least 5 characters")
+                @NotEmpty(message = "*Please provide your password") String password,
+                @Email(message = "*Please provide a valid e-mail address")
+                @NotEmpty(message = "*Please provide an e-mail address") String email)
+    {
+        this(username, password, email, null);
+    }
+
+    public User() {}
+
     /**
      * Function called every time a new rating is received to update the rating and the number of ratings received
      * @param latestRating
      */
     public void updateRating(double latestRating) {
-        this.rating =  (this.rating  * this.ratings_nb + latestRating) / (this.ratings_nb + 1);
-        this.ratings_nb = this.ratings_nb + 1;
+        this.rating =  (this.rating  * this.ratingsNb + latestRating) / (this.ratingsNb + 1);
+        this.ratingsNb = this.ratingsNb + 1;
     }
 
     public int getId() {
@@ -67,28 +93,28 @@ public class User
         this.username = username;
     }
 
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getEmail_address() {
-        return email_address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmail_address(String email_address) {
-        this.email_address = email_address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public double getRating() {
@@ -99,12 +125,12 @@ public class User
         this.rating = rating;
     }
 
-    public int getRatings_nb() {
-        return ratings_nb;
+    public int getRatingsNb() {
+        return ratingsNb;
     }
 
-    public void setRatings_nb(int ratings_nb) {
-        this.ratings_nb = ratings_nb;
+    public void setRatingsNb(int ratings_nb) {
+        this.ratingsNb = ratings_nb;
     }
 
     public Set<Role> getRoles() {
