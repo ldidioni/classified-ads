@@ -51,7 +51,7 @@ public class UserController
     }
 
     @PostMapping("/signup")
-    public String createAuthor(@Valid User user, BindingResult bindingResult, Map<String, Object> model) {
+    public String createUser(@Valid User user, BindingResult bindingResult, Map<String, Object> model) {
 
         User userExists = userService.findUserByEmail(user.getEmail());
 
@@ -69,7 +69,7 @@ public class UserController
             model.put("msg", "You has successfully registered !");
             model.put("user", new User());
 
-            return "users/login";
+            return "redirect:/login";
         }
     }
 }

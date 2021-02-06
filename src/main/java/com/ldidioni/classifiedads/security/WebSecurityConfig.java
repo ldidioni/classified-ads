@@ -22,8 +22,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final String USERS_QUERY = "select email, password, true from user where email=?";
-    private final String ROLES_QUERY = "select u.email, r.role from user u inner join user_role ur on (u.id = ur.user_id) inner join role r on (ur.role_id=r.id) where u.email=?";
+    private final String USERS_QUERY = "select email, password_hash, true from users where email=?";
+    private final String ROLES_QUERY = "select u.email, r.role from users u inner join users_roles ur on (u.id = ur.user_id) inner join roles r on (ur.role_id=r.id) where u.email=?";
 
 
     /**

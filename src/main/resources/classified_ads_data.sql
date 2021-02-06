@@ -9,7 +9,7 @@ INSERT INTO roles (role) VALUES
      ('USER'),
      ('ADMIN');
 
-INSERT INTO user_roles (user_id, role_id) VALUES
+INSERT INTO users_roles (user_id, role_id) VALUES
      (1, 1),
      (1, 2),
      (2, 1),

@@ -1,7 +1,7 @@
 CREATE DATABASE classified_ads;
 USE classified_ads;
 
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS users_roles;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS ads;
@@ -27,7 +27,7 @@ CREATE TABLE roles (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_roles (
+CREATE TABLE users_roles (
     id int(11) NOT NULL auto_increment,
 	user_id int(11) NOT NULL,
 	role_id int(11) NOT NULL,
