@@ -35,7 +35,7 @@ public class Ad
     @JoinColumn(name="category_id")
     private Category category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad") //TODO: check!!!
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad", cascade = CascadeType.ALL) //TODO: check!!!
     private List<Photo> photos;
 
     @ManyToMany
@@ -44,11 +44,14 @@ public class Ad
 
     public Ad(@NotEmpty(message = "*Please provide a title") String title,
               @NotEmpty(message = "*Please provide a description") String description,
-              @NotEmpty(message = "*Please provide a price") double price)
-    {
+              @NotNull(message = "*Please provide a price") double price,
+              User seller,
+              Category category) {
         this.title = title;
         this.description = description;
         this.price = price;
+        this.seller = seller;
+        this.category = category;
     }
 
     public Ad() {}

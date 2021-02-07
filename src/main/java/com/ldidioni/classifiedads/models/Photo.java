@@ -16,7 +16,7 @@ public class Photo
     @NotEmpty(message = "*Please provide the URL of your image")
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="ad_id")
     private Ad ad;
 
