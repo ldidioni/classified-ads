@@ -2,6 +2,7 @@ package com.ldidioni.classifiedads.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class Ad
     private String description;
 
     @Column(name = "asked_price")
-    @NotEmpty(message = "*Please provide a price")
+    @NotNull(message = "*Please provide a price")
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)

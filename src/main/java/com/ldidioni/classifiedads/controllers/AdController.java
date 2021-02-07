@@ -3,9 +3,7 @@ package com.ldidioni.classifiedads.controllers;
 import java.util.Map;
 import java.util.Optional;
 
-import com.ldidioni.classifiedads.models.Photo;
-import com.ldidioni.classifiedads.models.Tag;
-import com.ldidioni.classifiedads.models.User;
+import com.ldidioni.classifiedads.models.*;
 import com.ldidioni.classifiedads.repositories.CategoryRepository;
 import com.ldidioni.classifiedads.repositories.PhotoRepository;
 import com.ldidioni.classifiedads.repositories.TagRepository;
@@ -16,11 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ldidioni.classifiedads.models.Ad;
 import com.ldidioni.classifiedads.repositories.AdRepository;
 import com.ldidioni.classifiedads.services.UserService;
 
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 
 @Controller
@@ -71,16 +69,14 @@ public class AdController
     }
 
     @PostMapping("/ads/new")
-    public String processNewAd(@RequestParam("title")String title,
-                              @RequestParam("description")String description,
-                              @RequestParam("priceAsString")String priceAsString,
-                              @RequestParam("category")String category,
-                              @RequestParam("photos")String[] photos,
-                              @RequestParam("tags")String[] tags)
+    public String processNewAd(@RequestParam String title, @RequestParam String description, @RequestParam String priceAsString,
+                               @RequestParam String category, @RequestParam(required = false) String[] tags,
+                               @RequestParam(required = false) String[] photos)
     {
         Double price = parseDouble(priceAsString);
+        int categoryId = parseInt(category);
 
-        inputValidation(title, description, price, category);
+        //inputValidation(title, description, priceAsDouble, category);
 
         Ad ad = new Ad(title, description, price);
 
@@ -88,6 +84,9 @@ public class AdController
         //User seller = userService.findUserByEmail(auth.getName());
         User seller = userService.currentUser();
         ad.setSeller(seller);
+
+        Category existingCategory = categoryRepository.getOne(categoryId);
+        ad.setCategory(existingCategory);
         adRepository.save(ad);
 
         for (String photo_url : photos)
@@ -98,26 +97,27 @@ public class AdController
         }
 
         // tags are managed by admins, users pick from predefined list of tags
-        for (String tagName : tags)
+        for (String tag : tags)
         {
-            Tag tag = tagRepository.findByName(tagName);
-            tag.linkAd(ad);
+            int tagId = parseInt(tag);
+            Tag existingTag = tagRepository.getOne(tagId);
+            existingTag.linkAd(ad);
         }
 
         return "redirect:/ads/${ad.getId()}";
     }
 
-    @GetMapping("/ads/{adId}")
-    public String getAd(@PathVariable("adId")int adId, Map<String, Object> model) {
-        Optional ad = adRepository.findById(adId);
+    @GetMapping("/ads/{id}")
+    public String getAd(@PathVariable("id")int id, Map<String, Object> model) {
+        Optional ad = adRepository.findById(id);
         model.put("ad", ad);
 
         return "ads/show";
     }
 
-    @DeleteMapping("/ads/{adId}")
-    public String deleteAd(@PathVariable("adId")int adId) {
-        adRepository.findById(adId).ifPresent(ad -> adRepository.delete(ad));
+    @DeleteMapping("/ads/{id}")
+    public String deleteAd(@PathVariable("id")int id) {
+        adRepository.findById(id).ifPresent(ad -> adRepository.delete(ad));
 
         return "redirect:/ads";
     }

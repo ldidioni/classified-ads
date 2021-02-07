@@ -4,40 +4,43 @@
     <body>
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
-            <h1>Create a new ad</h1>
-            <form th:action="@{/ads/new}" method="post">
+            <h1 th:text="${ad.id} ? 'Update ad with id #' + ${ad.id} : 'Create a new ad'"></h1>
+            <form th:action="${ad.id} ? @{/ads/{id}(id=${ad.id})} : @{/ads/new}" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" id="title" name="title" th:placeholder="${ad.title}" class="form-control" required />
+                    <input class="form-control" type="text" id="title" name="title"
+                           th:placeholder="${ad.title} ?: 'Enter a title for the ad'" th:value="${ad.title} ?: ''" required />
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description:</label>
-                    <input type="text" id="description" name="description" th:placeholder="${ad.description}"
-                           class="form-control" required />
+                    <input class="form-control" type="text" id="description" name="description"
+                           th:placeholder="${ad.description} ?: 'Enter a description for the ad'" th:value="${ad.description} ?: ''" required />
                 </div>
                 <div class="mb-3">
                     <label for="priceAsString" class="form-label">Sell price:</label>
-                    <input type="text" id="priceAsString" name="priceAsString" th:placeholder="${ad.price} ?: 0"
-                           class="form-control" required />
+                    <input class="form-control" type="text" id="priceAsString" name="priceAsString"
+                           th:placeholder="${ad.price} ?: 'Enter a price for the ad'" th:value="${ad.price} ?: '0'" required />
                 </div>
                 <div class="mb-3">
                     <label for="category" class="form-label">Category:</label>
-                    <select id="category" name="category" th:field="${ad.category}" class="form-control">
-                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    <select id="category" name="category" th:field="${ad.category}" class="form-select">
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                                th:selected="category==${ad.category}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="tags" class="form-label">Tags (optional, you might select as many tags as you wish):</label>
+                    <select id="tags" name="tags" th:field="*{tags}" multiple="multiple" class="form-select">
+                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"
+                                th:selected="${ad.tags} AND ${#lists.contains(${ad.tags}, tag)}"></option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Photo URLs (optional, you might link up to 3 photos):</label>
-                    <input th:each="i : ${#numbers.sequence(0, 2)}" type="url" id="photo_${id}" name="photo_${id}"
-                           th:placeholder="'http://example.com'" class="form-control"/>
+                    <input th:each="i : ${#numbers.sequence(0, 2)}" type="url" id="photos[${i}]" name="photos[${i}]"
+                           th:placeholder="${ad.photos} AND ${ad.photos[i]} ? ${ad.photos[i]} : 'http://example.com'" class="form-control mb-2"/>
                 </div>
-                <div class="mb-3">
-                    <label for="tags" class="form-label">Tags:</label>
-                    <select id="tags" name="tags" th:field="*{tags}" multiple="multiple" class="form-control">
-                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Create ad</button>
+                <button type="submit" class="btn btn-primary" th:text="${ad.id} ? 'Update ad' : 'Create ad'"></button>
             </form>
             <div th:replace="fragments/footer.html"></div>
         </div>
