@@ -59,6 +59,25 @@ public class AdController
     }
 
     @GetMapping("/ads/new")
+    public String createNewTag(Model model)
+    {
+
+        model.addAttribute("adForm", new AdForm());
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("tags", tagRepository.findAll());
+
+        return "ads/form";
+    }
+
+    @PostMapping("/ads/new")
+    public String processNewTag(@ModelAttribute AdForm adForm)
+    {
+        //tagRepository.save(tag);
+
+        return "redirect:/ads";
+    }
+/*
+    @GetMapping("/ads/new")
     public String createNewAd(Model model) {
 
         model.addAttribute("ad", new Ad()); // NOT NEEDED???
@@ -102,7 +121,7 @@ public class AdController
 
         return "redirect:/ads/${ad.getId()}";
     }
-
+*/
     @GetMapping("/ads/{id}")
     public String getAd(@PathVariable("id")int id, Map<String, Object> model) {
         Optional ad = adRepository.findById(id);

@@ -6,31 +6,36 @@
             <div th:replace="fragments/navigation.html"></div>
             <h1>Index of Ads</h1>
             <div>
-                <p>
-                    Search for an ad:
-                </p>
-                <form th:action="@{/ads/search}" method="post">
-                    <div class="form-group">
-                        <label for="query">Title:</label>
-                        <input type="text" id="query" name="query" th:placeholder="'Enter your query...'" class="form-control" />
-                    </div>
-                    <div class="form-group">
+                <div>
+                    <h2>Search for an ad:</h2>
+                </div>
+                <form th:action="@{/ads/search}" method="post" class="row align-items-center">
+                    <div class="col-2">
                         <label for="category">Category:</label>
-                        <select id="category" name="category" th:field="*{searchedAd.category}">
+                        <select id="category" name="category" th:field="*{searchedAd.category}" class="form-select">
                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="col-6">
+                        <label for="query">Title:</label>
+                        <input type="text" id="query" name="query" th:placeholder="'Enter your query...'" class="form-control" />
+                    </div>
+                    <div class="col-auto">
                         <label for="tags">Tags:</label>
-                        <select id="tags" name="tags" th:field="*{searchedAd.tags}" multiple="multiple">
+                        <select id="tags" name="tags" th:field="*{searchedAd.tags}" multiple="multiple" class="form-select">
                             <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Search ad</button>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary col-2">Search ads</button>
+                    </div>
                 </form>
             </div>
             <div>
-                <div th:each="ad : ${ads}" class="card mb-3" style="max-width: 540px;">
+                <h2>Results:</h2>
+            </div>
+            <div>
+                <div th:each="ad : ${ads}" class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="${ad.photos[0]}" alt="photo for ${ad.title}">
@@ -40,7 +45,7 @@
                                 <h5 class="card-title" th:text="${ad.title}">Card title</h5>
                                 <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text
                                     below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted" th:text="CHF ${ad.price}">CHF 1234</small></p>
+                                <p class="card-text"><small class="text-muted" th:text="'CHF' + ${ad.price}">CHF 1234</small></p>
                             </div>
                         </div>
                     </div>
