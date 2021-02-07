@@ -1,59 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments/header.html"></div>
+    <div th:replace="fragments/header.html"></div>
     <body>
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
-            <h1>Index of Ads</h1>
+            <h1 th:text="${ad.title}"><span class="badge bg-secondary" th:text="'CHF ' + ${ad.price}"></span></h1>
+            <hr>
+            <div th:text="Offer proposed by ${ad.seller}"></div>
             <div>
-                <p>
-                    Search bar goes here!
-                </p>
+                <span th:each="tag : ${tags}" class="badge bg-secondary">tag.name</span>
             </div>
             <div>
-                <div th:each="ad : $ads}" class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="${ad.photos[0]}" alt="photo for ${ad.title}">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${ad.title}">Card title</h5>
-                                <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted" th:text="CHF ${ad.asked_price}">CHF 1234</small></p>
-                            </div>
-                        </div>
+                <p th:text="${ad.description}"></p>
+            </div>
+            <hr>
+            <div id="photosCarousel" class="carousel slide" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li th:each="photo, index : ${photos}"data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="${index}" class="${index}==0 ? 'active' : ''"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="${index}==0 ? 'carousel-item active' : 'carousel-item'">
+                        <img src="${photo.getImageUrl()}" class="d-block w-100" alt="${photo.getImageUrl()}">
                     </div>
                 </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </a>
             </div>
-            <table>
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>asked_price</th>
-                    <th>seller</th>
-                    <th>category</th>
-                    <th>photos</th>
-                    <th>tags</th>
-                    <th>edit</th>
-                    <th>delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="ad : $ads}">
-                    <td th:text="${ad.id}"></td>
-                    <td th:text="${ad.name}"></td>
-                    <td><a th:text="Edit ad" th:href="@{/ads/ ${ad.getId()}" /></td>
-                    <td>
-                        <form method="POST" th:action="@{/ads/ ${ad.getId()}">
-                            <button type="submit" name="submit" value="value">Delete ad</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div>Rate seller</div>
+            <form method="POST" th:action="@{/ads/ ${ad.getId()}">
+                <button type="submit" name="submit" value="value">Vote</button>
+            </form>
             <div>
                 <a th:text="Create new tag" th:href="@{tags/new}" class="btn btn-primary" />
             </div>

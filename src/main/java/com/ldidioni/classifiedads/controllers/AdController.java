@@ -105,46 +105,14 @@ public class AdController
 
         return "redirect:/ads";
     }
-/*
-    @PostMapping("/ads/new")
-    public String processNewAd(@RequestParam String title, @RequestParam String description, @RequestParam double price,
-                               @RequestParam int category, @RequestParam(required = false) int[] tags,
-                               @RequestParam(required = false) String[] photos)
-    {
-        //inputValidation(title, description, priceAsDouble, category);
 
-        Ad ad = new Ad(title, description, price);
-
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //User seller = userService.findUserByEmail(auth.getName());
-        User seller = userService.currentUser();
-        ad.setSeller(seller);
-
-        Category existingCategory = categoryRepository.getOne(category);
-        ad.setCategory(existingCategory);
-        adRepository.save(ad);
-
-        for (String photo_url : photos)
-        {
-            Photo photo = new Photo(photo_url);
-            photo.setAd(ad);
-            photoRepository.save(photo);
-        }
-
-        // tags are managed by admins, users pick from predefined list of tags
-        for (int tag : tags)
-        {
-            Tag existingTag = tagRepository.getOne(tag);
-            existingTag.linkAd(ad);
-        }
-
-        return "redirect:/ads/${ad.getId()}";
-    }
-*/
     @GetMapping("/ads/{id}")
     public String getAd(@PathVariable("id")int id, Map<String, Object> model) {
-        Optional ad = adRepository.findById(id);
+        Ad ad = adRepository.getOne(id);
         model.put("ad", ad);
+        model.put("seller", ad.getSeller());
+        //model.put("tags", );
+        //model.put("photos", );
 
         return "ads/show";
     }
