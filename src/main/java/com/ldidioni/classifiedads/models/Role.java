@@ -19,6 +19,8 @@ public class Role
         this.role = role;
     }
 
+    public Role() { }
+
     public int getId() {
         return id;
     }

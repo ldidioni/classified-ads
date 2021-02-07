@@ -17,8 +17,8 @@
                            th:placeholder="${ad.description} ?: 'Enter a description for the ad'" th:value="${ad.description} ?: ''" required />
                 </div>
                 <div class="mb-3">
-                    <label for="priceAsString" class="form-label">Sell price:</label>
-                    <input class="form-control" type="text" id="priceAsString" name="priceAsString"
+                    <label for="price" class="form-label">Sell price:</label>
+                    <input class="form-control" type="text" id="price" name="price"
                            th:placeholder="${ad.price} ?: 'Enter a price for the ad'" th:value="${ad.price} ?: '0'" required />
                 </div>
                 <div class="mb-3">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="tags" class="form-label">Tags (optional, you might select as many tags as you wish):</label>
-                    <select id="tags" name="tags" th:field="*{tags}" multiple="multiple" class="form-select">
+                    <select id="tags" name="tags" th:field="*{ad.tags}" multiple="multiple" class="form-select">
                         <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"
                                 th:selected="${ad.tags} AND ${#lists.contains(${ad.tags}, tag)}"></option>
                     </select>

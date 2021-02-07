@@ -25,6 +25,8 @@ public class Photo
         this.imageUrl = imageUrl;
     }
 
+    public Photo() { }
+
     public int getId() {
         return id;
     }

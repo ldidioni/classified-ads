@@ -69,13 +69,10 @@ public class AdController
     }
 
     @PostMapping("/ads/new")
-    public String processNewAd(@RequestParam String title, @RequestParam String description, @RequestParam String priceAsString,
-                               @RequestParam String category, @RequestParam(required = false) String[] tags,
+    public String processNewAd(@RequestParam String title, @RequestParam String description, @RequestParam double price,
+                               @RequestParam int category, @RequestParam(required = false) int[] tags,
                                @RequestParam(required = false) String[] photos)
     {
-        Double price = parseDouble(priceAsString);
-        int categoryId = parseInt(category);
-
         //inputValidation(title, description, priceAsDouble, category);
 
         Ad ad = new Ad(title, description, price);
@@ -85,7 +82,7 @@ public class AdController
         User seller = userService.currentUser();
         ad.setSeller(seller);
 
-        Category existingCategory = categoryRepository.getOne(categoryId);
+        Category existingCategory = categoryRepository.getOne(category);
         ad.setCategory(existingCategory);
         adRepository.save(ad);
 
@@ -97,10 +94,9 @@ public class AdController
         }
 
         // tags are managed by admins, users pick from predefined list of tags
-        for (String tag : tags)
+        for (int tag : tags)
         {
-            int tagId = parseInt(tag);
-            Tag existingTag = tagRepository.getOne(tagId);
+            Tag existingTag = tagRepository.getOne(tag);
             existingTag.linkAd(ad);
         }
 
