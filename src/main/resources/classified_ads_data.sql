@@ -39,3 +39,20 @@ INSERT INTO tags (name) VALUES
     ('Occasion'),
     ('Rare'),
     ('Urgent');
+
+INSERT INTO photos (ad_id, image_url) VALUES
+    (1, 'https://www.asphalte.ch/news/wp-content/webp-express/webp-images/doc-root/news/wp-content/uploads/2018/07/BMW-M5-200-100.jpg'),
+    (1, 'https://www.asphalte.ch/news/wp-content/webp-express/webp-images/doc-root/news/wp-content/uploads/2018/07/BMW-M5-F90-18-750x422.jpg'),
+    (1, 'https://www.asphalte.ch/news/wp-content/uploads/2018/07/BMW-M5-F90-01.jpg'),
+    (2, 'https://www.asphalte.ch/news/wp-content/webp-express/webp-images/doc-root/news/wp-content/uploads/2016/10/Alfa-Romeo-Giulia-Quadrifoglio-03-750.jpg'),
+    (2, 'https://www.asphalte.ch/news/wp-content/webp-express/webp-images/doc-root/news/wp-content/uploads/2016/10/Alfa-Romeo-Giulia-Quadrifoglio-24.jpg'),
+    (3, 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg'),
+    (4, 'https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg'),
+    (4, 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'),
+    (5, 'https://images.pexels.com/photos/774281/pexels-photo-774281.jpeg'),
+    (5, 'https://images.pexels.com/photos/3185484/pexels-photo-3185484.jpeg'),
+    (6, 'https://img01.ztat.net/article/spp-media-p1/7744da0c6edb33e79d74a5b8c4171d9c/32ae9170490348cebcead95c16ec4df5.jpg'),
+    (7, 'https://www.datocms-assets.com/19016/1590662834-209.jpg'),
+    (7, 'https://www.datocms-assets.com/19016/1590662908-213.jpg'),
+    (7, 'https://www.datocms-assets.com/19016/1590669830-948.jpg'),
+    (8, 'https://static.digitecgalaxus.ch/Files/4/1/2/0/0/6/1/3/5200-hantelbank-hammer-force-2.0-geraet-01_2.jpg');

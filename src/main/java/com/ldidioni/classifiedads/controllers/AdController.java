@@ -112,7 +112,7 @@ public class AdController
         model.put("ad", ad);
         model.put("seller", ad.getSeller());
         //model.put("tags", );
-        //model.put("photos", );
+        model.put("photos", photoRepository.findByAd(ad));
 
         return "ads/show";
     }

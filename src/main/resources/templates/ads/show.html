@@ -4,9 +4,9 @@
     <body>
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
-            <h1 th:text="${ad.title}"><span class="badge bg-secondary" th:text="'CHF ' + ${ad.price}"></span></h1>
+            <h1 th:text="${ad.title}"></h1><h1><span class="badge bg-secondary" th:text="'CHF ' + ${ad.price}"></span></h1>
             <hr>
-            <div th:text="Offer proposed by ${ad.seller}"></div>
+            <div th:text="'Offer proposed by ' + ${ad.seller.getUsername()}"></div>
             <div>
                 <span th:each="tag : ${tags}" class="badge bg-secondary">tag.name</span>
             </div>
@@ -16,30 +16,30 @@
             <hr>
             <div id="photosCarousel" class="carousel slide" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
-                    <li th:each="photo, index : ${photos}"data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="${index}" class="${index}==0 ? 'active' : ''"></li>
+                    <li th:each="photo,iterStat : ${photos}" data-bs-target="#photosCarousel"
+                        data-bs-slide-to="${iterStat.index}" th:class="${iterStat.index == 0}? 'active' : ''"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="${index}==0 ? 'carousel-item active' : 'carousel-item'">
-                        <img src="${photo.getImageUrl()}" class="d-block w-100" alt="${photo.getImageUrl()}">
+                    <div th:each="photo,iterStat : ${photos}" th:class="${iterStat.index == 0}? 'carousel-item active' : 'carousel-item'">
+                        <img th:src="@{${photo.imageUrl}}" class="d-block w-100"/>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                <a class="carousel-control-prev" href="#photosCarousel" role="button" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                <a class="carousel-control-next" href="#photosCarousel" role="button" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </a>
             </div>
             <div>Rate seller</div>
-            <form method="POST" th:action="@{/ads/ ${ad.getId()}">
+            <!--<form method="POST" th:action="@{/ads/ ${ad.getId()}">
                 <button type="submit" name="submit" value="value">Vote</button>
             </form>
             <div>
                 <a th:text="Create new tag" th:href="@{tags/new}" class="btn btn-primary" />
-            </div>
+            </div>-->
             <div th:replace="fragments/footer.html"></div>
         </div>
     </body>
