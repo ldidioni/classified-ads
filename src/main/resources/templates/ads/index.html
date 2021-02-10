@@ -36,21 +36,22 @@
             </div>
             <div>
                 <div th:each="ad : ${ads}" class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img th:src="${#arrays.length(ad.photos)} ? ${ad.photos[0]} : '#'" alt="photo for ${ad.title}">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <a th:href="@{/ads/{id}(id=${ad.id})}" class="stretched-link link-dark">
-                                    <h5 class="card-title" th:text="${ad.title}">Card title</h5>
-                                </a>
-                                <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text
-                                    below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted" th:text="'CHF ' + ${ad.price}">CHF 1234</small></p>
+                    <a th:href="@{/ads/{id}(id=${ad.id})}" class="stretched-link link-dark text-decoration-none">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img th:src="${#arrays.length(ad.photos)} ? ${ad.photos[0].imageUrl} : '#'" alt="photo for ${ad.title}" class="img-fluid"/>
+                            </div>
+                            <div class="card col-md-8">
+                                <div class="card-header" th:text="${ad.category.name}">Header</div>
+                                <div class="card-body">
+                                    <h3 class="card-title" th:text="${ad.title}">Card title</h3>
+                                    <p class="card-text" th:text="${ad.description}">This is a wider card with supporting text
+                                        below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                                <div class="card-footer text-white bg-secondary" th:text="'CHF ' + ${ad.price}">CHF 1234</div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div th:replace="fragments/footer.html"></div>
