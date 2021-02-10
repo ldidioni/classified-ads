@@ -3,6 +3,7 @@ package com.ldidioni.classifiedads.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,9 +39,9 @@ public class Ad
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad", cascade = CascadeType.ALL) //TODO: check!!!
     private List<Photo> photos;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "ads_tags", joinColumns = @JoinColumn(name = "ad_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private Set<Tag> tags  = new HashSet<>();
 
     public Ad(@NotEmpty(message = "*Please provide a title") String title,
               @NotEmpty(message = "*Please provide a description") String description,

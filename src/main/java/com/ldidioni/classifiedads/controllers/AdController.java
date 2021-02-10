@@ -84,8 +84,6 @@ public class AdController
                         userRepository.getOne(1),   // HACK: should be: seller
                         adForm.getAd().getCategory());
 
-        adRepository.save(ad);
-
         for (String photoUrl : adForm.getPhotoUrls())
         {
             if(photoUrl != "")
@@ -100,8 +98,10 @@ public class AdController
         for (Tag tag : adForm.getAd().getTags())
         {
             tag.linkAd(ad);
-            tagRepository.save(tag);
+            //tagRepository.save(tag);
         }
+
+        adRepository.save(ad);
 
         return "redirect:/ads";
     }
@@ -111,7 +111,7 @@ public class AdController
         Ad ad = adRepository.getOne(id);
         model.put("ad", ad);
         model.put("seller", ad.getSeller());
-        //model.put("tags", );
+        model.put("tags", ad.getTags());
         model.put("photos", photoRepository.findByAd(ad));
 
         return "ads/show";

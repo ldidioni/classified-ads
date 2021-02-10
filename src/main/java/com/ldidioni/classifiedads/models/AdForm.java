@@ -1,5 +1,6 @@
 package com.ldidioni.classifiedads.models;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 public class AdForm {
@@ -12,7 +13,10 @@ public class AdForm {
         this.photoUrls = photoUrls;
     }
 
-    public AdForm(){}
+    public AdForm(){
+        this.ad = new Ad();
+        this.photoUrls = new String[3];
+    }
 
     public Ad getAd() {
         return ad;

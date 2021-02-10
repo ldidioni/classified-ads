@@ -2,6 +2,7 @@ package com.ldidioni.classifiedads.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,8 @@ public class Tag
     @NotEmpty(message = "*Please provide a name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-    private Set<Ad> ads;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags", cascade = CascadeType.PERSIST)
+    private Set<Ad> ads = new HashSet<>();
 
     public Tag(@NotEmpty(message = "*Please provide a name") String name)
     {
@@ -48,6 +49,7 @@ public class Tag
     }
 
     public void linkAd(Ad ad) {
-        this.ads.add(ad);
+        ad.getTags().add(this);
+        this.getAds().add(ad);
     }
 }

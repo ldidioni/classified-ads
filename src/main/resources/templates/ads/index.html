@@ -38,7 +38,7 @@
                 <div th:each="ad : ${ads}" class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img th:src="${ad.photos[0]}" alt="photo for ${ad.title}">
+                            <img th:src="${#arrays.length(ad.photos)} ? ${ad.photos[0]} : '#'" alt="photo for ${ad.title}">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
