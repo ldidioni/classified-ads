@@ -57,6 +57,25 @@ public class Ad
 
     public Ad() {}
 
+    public Ad(int id,
+              @NotEmpty(message = "*Please provide a title") String title,
+              @NotEmpty(message = "*Please provide a description") String description,
+              @NotNull(message = "*Please provide a price")
+              double price,
+              User seller,
+              Category category,
+              List<Photo> photos,
+              Set<Tag> tags) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.seller = seller;
+        this.category = category;
+        this.photos = photos;
+        this.tags = tags;
+    }
+
     public int getId() {
         return id;
     }

@@ -61,7 +61,7 @@ public class AdController
     }
 
     @GetMapping("/ads/new")
-    public String createNewTag(Model model)
+    public String createNewAd(Model model)
     {
 
         model.addAttribute("adForm", new AdForm());
@@ -72,7 +72,7 @@ public class AdController
     }
 
     @PostMapping("/ads/new")
-    public String processNewTag(@ModelAttribute AdForm adForm)
+    public String processNewAd(@ModelAttribute AdForm adForm)
     {
         User seller = userService.currentUser();
         //User seller;
@@ -102,6 +102,42 @@ public class AdController
         }
 
         adRepository.save(ad);
+
+        return "redirect:/ads";
+    }
+
+    @GetMapping("/ads/{id}/edit")
+    public String editAd(@PathVariable("id")int id, Model model)
+    {
+        Ad ad = adRepository.getOne(id);
+        List<Photo> photos = ad.getPhotos();
+        String[] photoUrls = new String[3];
+
+        // HACK: for some reason the attributes of ad are null
+        String title = ad.getTitle();
+        String description = ad.getDescription();
+        double price = ad.getPrice();
+        User seller = ad.getSeller();
+        Category category = ad.getCategory();
+        Set<Tag> tags = ad.getTags();
+
+        ad = new Ad(id, title, description, price, seller, category, photos, tags);
+
+        for(int i = 0 ; i < photos.size() ; i++) {
+            photoUrls[i] = photos.get(i).getImageUrl();
+        }
+
+        model.addAttribute("adForm", new AdForm(ad, photoUrls));
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("tags", tagRepository.findAll());
+
+        return "ads/form";
+    }
+
+    @PostMapping("/ads/{id}/edit")
+    public String processEditAd(@PathVariable("id")int id, @ModelAttribute AdForm adForm)
+    {
+        //tagRepository.findById(id).ifPresent(existingTag -> tagService.update(existingTag.getId(), tag));
 
         return "redirect:/ads";
     }
