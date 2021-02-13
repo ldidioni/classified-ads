@@ -12,13 +12,13 @@
                 <form th:action="@{/ads/search}" method="post" class="row align-items-center">
                     <div class="col-2">
                         <label for="category">Category:</label>
-                        <select id="category" name="category" th:field="*{searchedAd.category}" class="form-select">
+                        <select id="category" name="category" th:field="${searchedAd.category}" class="form-select">
                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                         </select>
                     </div>
                     <div class="col-6">
-                        <label for="query">Title:</label>
-                        <input type="text" id="query" name="query" th:placeholder="'Enter your query...'" class="form-control" />
+                        <label for="query">Query:</label>
+                        <input type="text" id="query" name="query" th:field="${searchedAd.title}" th:placeholder="'Enter your query...'" class="form-control" />
                     </div>
                     <div class="col-2">
                         <label for="tags">Tags:</label>

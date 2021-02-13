@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -190,6 +189,37 @@ public class AdController
         });
 
         return "redirect:/ads";
+    }
+
+    @PostMapping("/ads/search")
+    public String processSearchAd(@ModelAttribute Ad searchedAd, Map<String, Object> model)
+    {
+        List<Ad> foundAds = new ArrayList<>();
+
+        if(searchedAd.getCategory() == null && searchedAd.getTags().isEmpty()) {
+
+            foundAds = adRepository.findDistinctByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(searchedAd.getTitle(), searchedAd.getTitle());
+        }
+        else {
+
+            String[] tagNames = new String[0];
+            int index = 0;
+
+            for (Tag tag : searchedAd.getTags())
+            {
+                tagNames[index++] = tag.getName();
+            }
+
+            foundAds = adRepository.findCustom( searchedAd.getTitle(), searchedAd.getCategory().getName()); //, tagNames
+        }
+
+        model.put("ads", foundAds);
+
+        model.put("searchedAd", new Ad());
+        model.put("categories", categoryRepository.findAll());
+        model.put("tags", tagRepository.findAll());
+
+        return "ads/index";
     }
 
     private void inputValidation(String title, String description, double asked_price, String category)
