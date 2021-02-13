@@ -196,24 +196,25 @@ public class AdController
     {
         List<Ad> foundAds = new ArrayList<>();
 
-        if(searchedAd.getCategory() == null && searchedAd.getTags().isEmpty()) {
+        if(searchedAd.getTags().isEmpty()) {
 
-            foundAds = adRepository.findDistinctByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(searchedAd.getTitle(), searchedAd.getTitle());
+            foundAds = adRepository.findCustom(searchedAd.getTitle(), searchedAd.getCategory().getName());
         }
         else {
 
-            String[] tagNames = new String[0];
+            List<String> tagNames = new ArrayList<String>();
+
             int index = 0;
 
             for (Tag tag : searchedAd.getTags())
             {
-                tagNames[index++] = tag.getName();
+                tagNames.add(tag.getName());
             }
 
-            foundAds = adRepository.findCustom( searchedAd.getTitle(), searchedAd.getCategory().getName()); //, tagNames
+            foundAds = adRepository.findCustomWithTags(searchedAd.getTitle(), searchedAd.getCategory().getName(), tagNames);
         }
 
-        model.put("ads", foundAds);
+        model.put("ads", foundAds.isEmpty() ? foundAds : adRepository.findAll());
 
         model.put("searchedAd", new Ad());
         model.put("categories", categoryRepository.findAll());
