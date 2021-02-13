@@ -39,7 +39,7 @@ public class Ad
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad", cascade = CascadeType.ALL) //TODO: check!!!
     private List<Photo> photos;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "ads_tags", joinColumns = @JoinColumn(name = "ad_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags  = new HashSet<>();
 
@@ -52,6 +52,17 @@ public class Ad
         this.description = description;
         this.price = price;
         this.seller = seller;
+        this.category = category;
+    }
+
+    // No seller
+    public Ad(@NotEmpty(message = "*Please provide a title") String title,
+              @NotEmpty(message = "*Please provide a description") String description,
+              @NotNull(message = "*Please provide a price") double price,
+              Category category) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
         this.category = category;
     }
 

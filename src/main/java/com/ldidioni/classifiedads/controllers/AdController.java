@@ -4,20 +4,16 @@ import java.util.*;
 
 import com.ldidioni.classifiedads.models.*;
 import com.ldidioni.classifiedads.repositories.*;
+import com.ldidioni.classifiedads.services.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.ldidioni.classifiedads.services.UserService;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
 
 
 @Controller
@@ -34,6 +30,9 @@ public class AdController
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    AdService adService;
 
     //User management via UserService class
     @Autowired
@@ -113,16 +112,6 @@ public class AdController
         List<Photo> photos = ad.getPhotos();
         String[] photoUrls = new String[3];
 
-        // HACK: for some reason the attributes of ad are null
-        String title = ad.getTitle();
-        String description = ad.getDescription();
-        double price = ad.getPrice();
-        User seller = ad.getSeller();
-        Category category = ad.getCategory();
-        Set<Tag> tags = ad.getTags();
-
-        ad = new Ad(id, title, description, price, seller, category, photos, tags);
-
         for(int i = 0 ; i < photos.size() ; i++) {
             photoUrls[i] = photos.get(i).getImageUrl();
         }
@@ -137,7 +126,41 @@ public class AdController
     @PostMapping("/ads/{id}/edit")
     public String processEditAd(@PathVariable("id")int id, @ModelAttribute AdForm adForm)
     {
-        //tagRepository.findById(id).ifPresent(existingTag -> tagService.update(existingTag.getId(), tag));
+        //User seller = userService.currentUser();
+        //User seller;
+        userRepository.findById(1).ifPresent(user -> adForm.getAd().setSeller(user));
+
+        Ad originalAd = adRepository.getOne(id);
+
+        // remove all photos linked to original ad
+        originalAd.getPhotos().clear();
+        photoRepository.deleteByAd(originalAd);
+
+        for (String photoUrl : adForm.getPhotoUrls())
+        {
+            if(photoUrl != "")
+            {
+                Photo photo = new Photo(photoUrl);
+                photo.setAd(adForm.getAd());
+                photoRepository.save(photo);
+            }
+        }
+
+        originalAd.getTags().clear();
+
+        // remove all tags linked to original ad and link
+        for (Tag tag : originalAd.getTags())
+        {
+            tag.removeAd(originalAd);
+        }
+
+        // add new tags
+        for (Tag tag : adForm.getAd().getTags())
+        {
+            tag.linkAd(adForm.getAd());
+        }
+
+        adRepository.findById(id).ifPresent(existingAd -> adService.update(id, adForm.getAd()));
 
         return "redirect:/ads";
     }

@@ -18,7 +18,7 @@ public class Tag
     @NotEmpty(message = "*Please provide a name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags", cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tags", cascade = CascadeType.PERSIST)
     private Set<Ad> ads = new HashSet<>();
 
     public Tag(@NotEmpty(message = "*Please provide a name") String name)
@@ -51,5 +51,10 @@ public class Tag
     public void linkAd(Ad ad) {
         ad.getTags().add(this);
         this.getAds().add(ad);
+    }
+
+    public void removeAd(Ad ad) {
+        ad.getTags().remove(this);
+        this.getAds().remove(ad);
     }
 }

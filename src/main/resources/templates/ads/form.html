@@ -5,7 +5,7 @@
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
             <h1 th:text="${adForm.ad.id} ? 'Update ad with id #' + ${adForm.ad.id} : 'Create a new ad'"></h1>
-            <form th:action="${adForm.ad.id} ? @{/ads/{id}(id=${adForm.ad.id})} : @{/ads/new}" method="post">
+            <form th:action="${adForm.ad.id} ? @{/ads/{id}/edit(id=${adForm.ad.id})} : @{/ads/new}" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
                     <input class="form-control" type="text" id="title" name="title" th:field="${adForm.ad.title}"
