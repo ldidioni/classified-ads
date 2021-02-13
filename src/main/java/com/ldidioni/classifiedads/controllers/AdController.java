@@ -202,9 +202,7 @@ public class AdController
         }
         else {
 
-            List<String> tagNames = new ArrayList<String>();
-
-            int index = 0;
+            List<String> tagNames = new ArrayList<>();
 
             for (Tag tag : searchedAd.getTags())
             {
@@ -214,7 +212,7 @@ public class AdController
             foundAds = adRepository.findCustomWithTags(searchedAd.getTitle(), searchedAd.getCategory().getName(), tagNames);
         }
 
-        model.put("ads", foundAds.isEmpty() ? foundAds : adRepository.findAll());
+        model.put("ads", foundAds.isEmpty() ? adRepository.findAll() : foundAds);
 
         model.put("searchedAd", new Ad());
         model.put("categories", categoryRepository.findAll());
