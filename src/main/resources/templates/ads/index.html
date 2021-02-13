@@ -58,7 +58,7 @@
                     <div>
                         <button><a th:text="'Edit ad'" th:href="@{/ads/{id}/edit(id=${ad.id})}" /></button>
                         <div>
-                            <form action="#" th:action="@{/ads/{id}/edit(id=${ad.id})}" th:method="delete">
+                            <form action="#" th:action="@{/ads/{id}(id=${ad.id})}" th:method="delete">
                                 <button type="submit" class="btn" th:text="'Delete ad'"></button>
                             </form>
                         </div>

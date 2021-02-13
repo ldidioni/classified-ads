@@ -178,7 +178,16 @@ public class AdController
 
     @DeleteMapping("/ads/{id}")
     public String deleteAd(@PathVariable("id")int id) {
-        adRepository.findById(id).ifPresent(ad -> adRepository.delete(ad));
+        adRepository.findById(id).ifPresent(ad -> {
+
+            for (Tag tag : ad.getTags())
+            {
+                tag.removeAd(ad);
+            }
+
+            photoRepository.deleteByAd(ad);
+            adRepository.delete(ad);
+        });
 
         return "redirect:/ads";
     }
