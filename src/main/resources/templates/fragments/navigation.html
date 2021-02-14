@@ -7,7 +7,7 @@
         <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/users}">Users</a></li>
         <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/categories}">Categories</a></li>
         <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/tags}">Tags</a></li>
-        <li th:if="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{ads/new}">Create new ad</a></li>
+        <li th:if="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/ads/new}">Create new ad</a></li>
         <li th:if="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
         <li th:unless="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
         <li th:unless="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/signup}">Register</a></li>
