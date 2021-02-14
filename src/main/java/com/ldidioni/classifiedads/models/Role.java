@@ -14,14 +14,14 @@ public class Role
     private int id;
 
     @Column
-    private String role;
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles", cascade = CascadeType.PERSIST)
     private Set<User> users = new HashSet<>();
 
-    public Role(String role)
+    public Role(String name)
     {
-        this.role = role;
+        this.name = name;
     }
 
     public Role() { }
@@ -30,11 +30,11 @@ public class Role
         return id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 }

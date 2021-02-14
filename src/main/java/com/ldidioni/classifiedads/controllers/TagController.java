@@ -3,6 +3,7 @@ package com.ldidioni.classifiedads.controllers;
 import com.ldidioni.classifiedads.models.Tag;
 import com.ldidioni.classifiedads.repositories.TagRepository;
 import com.ldidioni.classifiedads.services.TagService;
+import com.ldidioni.classifiedads.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +21,15 @@ public class TagController
     @Autowired
     TagService tagService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/tags")
     public String getAllTags(Map<String, Object> model)
     {
         model.put("tags", tagRepository.findAll());
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
 
         return "tags/index";
     }
@@ -32,6 +38,8 @@ public class TagController
     public String createNewTag(Model model)
     {
         model.addAttribute("tag", new Tag());
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "tags/form";
     }
@@ -49,6 +57,8 @@ public class TagController
     {
         Tag tag = tagRepository.getOne(id);
         model.addAttribute("tag", tag);
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "tags/form";
     }

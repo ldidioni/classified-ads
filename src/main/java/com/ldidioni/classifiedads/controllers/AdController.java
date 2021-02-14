@@ -6,8 +6,6 @@ import com.ldidioni.classifiedads.models.*;
 import com.ldidioni.classifiedads.repositories.*;
 import com.ldidioni.classifiedads.services.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +46,8 @@ public class AdController
         model.put("searchedAd", new Ad());
         model.put("categories", categoryRepository.findAll());
         model.put("tags", tagRepository.findAll());
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
 
         return "ads/index";
     }
@@ -65,6 +65,8 @@ public class AdController
         model.addAttribute("adForm", new AdForm());
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("tags", tagRepository.findAll());
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "ads/form";
     }
@@ -72,14 +74,12 @@ public class AdController
     @PostMapping("/ads/new")
     public String processNewAd(@ModelAttribute AdForm adForm)
     {
-        User seller = userService.currentUser();
-        //User seller;
-        //userRepository.findById(1).ifPresent(user -> seller = user);
+        User seller = userService.findUserByUsername(userService.getCurrentUsername());
 
         Ad ad = new Ad( adForm.getAd().getTitle(),
                         adForm.getAd().getDescription(),
                         adForm.getAd().getPrice(),
-                        userRepository.getOne(1),   // HACK: should be: seller
+                        seller,
                         adForm.getAd().getCategory());
 
         for (String photoUrl : adForm.getPhotoUrls())
@@ -118,6 +118,8 @@ public class AdController
         model.addAttribute("adForm", new AdForm(ad, photoUrls));
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("tags", tagRepository.findAll());
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "ads/form";
     }
@@ -125,9 +127,8 @@ public class AdController
     @PostMapping("/ads/{id}/edit")
     public String processEditAd(@PathVariable("id")int id, @ModelAttribute AdForm adForm)
     {
-        //User seller = userService.currentUser();
-        //User seller;
-        userRepository.findById(1).ifPresent(user -> adForm.getAd().setSeller(user));
+        User seller = userService.findUserByUsername(userService.getCurrentUsername());
+        adForm.getAd().setSeller(seller);
 
         Ad originalAd = adRepository.getOne(id);
 
@@ -217,6 +218,8 @@ public class AdController
         model.put("searchedAd", new Ad());
         model.put("categories", categoryRepository.findAll());
         model.put("tags", tagRepository.findAll());
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
 
         return "ads/index";
     }

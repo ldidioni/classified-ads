@@ -23,7 +23,7 @@ CREATE TABLE users (
 
 CREATE TABLE roles (
     id int(11) NOT NULL auto_increment,
-	role VARCHAR(255),
+	name VARCHAR(255),
     PRIMARY KEY (id)
 );
 

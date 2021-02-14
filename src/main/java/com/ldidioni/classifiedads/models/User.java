@@ -3,7 +3,12 @@ package com.ldidioni.classifiedads.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+
+import com.ldidioni.classifiedads.repositories.RoleRepository;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,9 +44,9 @@ public class User
     @Column(name = "ratings_nb")
     private int ratingsNb;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seller") //TODO: check!!!
     private List<Ad> ads;

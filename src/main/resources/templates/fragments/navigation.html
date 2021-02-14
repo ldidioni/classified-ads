@@ -1,31 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-        <span class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" th:href="@{/ads}">Ads list</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{ads/new}">Create new ad</a></li>
-            </ul>
-        </span>
-        <span th:if="${ADMIN}">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" th:href="@{/users}">Users</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/categories}">Categories</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/tags}">Tags</a></li>
-            </ul>
-        </span>
-        <span th:if="${username}">
-            <ul class="navbar-nav">
-                <li class="nav-item"><span th:text="${username}"></span></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
-            </ul>
-        </span>
-        <span th:unless="${username}">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/signup}">Register</a></li>
-            </ul>
-        </span>
-    </div>
+<nav class="container-fluid">
+    <ul class="nav nav-pills">
+        <li th:if="${currentUser}" class="nav-item"><span th:text="'Welcome, ' + ${currentUser.username}"></span></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/ads}">Ads list</a></li>
+        <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/users}">Users</a></li>
+        <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/categories}">Categories</a></li>
+        <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/tags}">Tags</a></li>
+        <li th:if="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{ads/new}">Create new ad</a></li>
+        <li th:if="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+        <li th:unless="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+        <li th:unless="${currentUser}" class="nav-item"><a class="nav-link" th:href="@{/signup}">Register</a></li>
+    </ul>
 </nav>

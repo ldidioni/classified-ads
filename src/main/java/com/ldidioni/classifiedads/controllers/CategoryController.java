@@ -3,6 +3,7 @@ package com.ldidioni.classifiedads.controllers;
 import com.ldidioni.classifiedads.models.Category;
 import com.ldidioni.classifiedads.repositories.CategoryRepository;
 import com.ldidioni.classifiedads.services.CategoryService;
+import com.ldidioni.classifiedads.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +20,15 @@ public class CategoryController
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/categories")
     public String getAllCategories(Map<String, Object> model)
     {
         model.put("categories", categoryRepository.findAll());
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
 
         return "categories/index";
     }
@@ -31,6 +37,8 @@ public class CategoryController
     public String createNewCategory(Model model)
     {
         model.addAttribute("category", new Category());
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "categories/form";
     }
@@ -48,6 +56,8 @@ public class CategoryController
     {
         Category category = categoryRepository.getOne(id);
         model.addAttribute("category", category);
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
 
         return "categories/form";
     }
