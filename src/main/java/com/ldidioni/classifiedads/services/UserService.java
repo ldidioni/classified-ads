@@ -26,9 +26,9 @@ public class UserService
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public User findUserByEmail(String email)
+	public User findUserByUsername(String username)
 	{
-		return userRepository.findByEmail(email);
+		return userRepository.findByUsername(username);
 	}
 
 	public void saveUser(User user)
@@ -43,7 +43,7 @@ public class UserService
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof User) {
-			return findUserByEmail(((User)principal).getEmail());
+			return findUserByUsername(((User)principal).getUsername());
 		} else {
 			return null;
 		}

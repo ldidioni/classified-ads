@@ -28,7 +28,7 @@ public class UserController
     @PostMapping("/login")
     public String processLogin(@Valid User user, BindingResult bindingResult, Map<String, Object> model) {
 
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByUsername(user.getUsername());
 
         if (userExists == null) {
             return ("redirect:/users/login?error=true");
@@ -53,7 +53,7 @@ public class UserController
     @PostMapping("/signup")
     public String createUser(@Valid User user, BindingResult bindingResult, Map<String, Object> model) {
 
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByUsername(user.getUsername());
 
         if (userExists != null) {
             return ("redirect:/signup?error=true");

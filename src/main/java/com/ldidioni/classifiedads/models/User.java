@@ -40,7 +40,7 @@ public class User
     private int ratingsNb;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id")) //TODO: invert join & inverseJoin? https://www.baeldung.com/spring-data-rest-relationships
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seller") //TODO: check!!!
