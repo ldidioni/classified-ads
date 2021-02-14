@@ -30,7 +30,7 @@ INSERT INTO ads (id, title, description, asked_price, seller_id, category_id) VA
     (3, 'Vends duplex vue lac Léman', 'Je vends mon appartement en duplex avec vue spectaculaire.', 1450000, 2, 2),
     (4, 'Vends maison de ville', 'Je vends ma maison située à deux pas de la gare de Neuchâtel.', 160000, 3, 2),
     (5, 'Vends chalet de montagne', 'Je vends mon chalet familial situé au pied des pistes.', 825000, 4, 2),
-    (6, 'Vends robe de gala', 'Je vends une robe de soirée en parfait état.', 400, 5, 3),
+    (6, 'Vends slip de bain', 'Je vends un slip de bain en parfait état.', 400, 5, 3),
     (7, 'Vends vélo de course', 'Je vends mon vélo en carbone avec seulement 2000 km au compteur.', 750, 1, 4),
     (8, 'Vends banc de musculation', 'Je vends mon équipement de musculation, idéal pour rester en forme durant l\'hiver.', 200, 4, 4);
 
@@ -51,7 +51,7 @@ INSERT INTO photos (id, ad_id, image_url) VALUES
     (8, 4, 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'),
     (9, 5, 'https://images.pexels.com/photos/774281/pexels-photo-774281.jpeg'),
     (10, 5, 'https://images.pexels.com/photos/3185484/pexels-photo-3185484.jpeg'),
-    (11, 6, 'https://img01.ztat.net/article/spp-media-p1/7744da0c6edb33e79d74a5b8c4171d9c/32ae9170490348cebcead95c16ec4df5.jpg'),
+    (11, 6, 'https://cdn.laredoute.com/products/680by680/0/6/2/062ce69d52bf23a862b6b7a041941f29.jpg'),
     (12, 7, 'https://www.datocms-assets.com/19016/1590662834-209.jpg'),
     (13, 7, 'https://www.datocms-assets.com/19016/1590662908-213.jpg'),
     (14, 7, 'https://www.datocms-assets.com/19016/1590669830-948.jpg'),
