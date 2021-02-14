@@ -22,7 +22,7 @@ INSERT INTO categories (id, name) VALUES
     (1, 'Automobile'),
     (2, 'Immobilier'),
     (3, 'Vêtements'),
-    (4, 'Equipements sportif');
+    (4, 'Equipements sportifs');
 
 INSERT INTO ads (id, title, description, asked_price, seller_id, category_id) VALUES
     (1, 'Vends BMW serie 3', 'Je vends ma voiture chérie de la marque à l\'hélice.', 32000, 1, 1),
