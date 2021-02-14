@@ -2,7 +2,7 @@
 
 <nav class="container-fluid">
     <ul class="nav nav-pills">
-        <li th:if="${currentUser}" class="nav-item"><span th:text="'Welcome, ' + ${currentUser.username}"></span></li>
+        <li th:if="${currentUser}" class="navbar-brand"><span th:text="'Welcome, ' + ${currentUser.username}"></span></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/ads}">Ads list</a></li>
         <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/users}">Users</a></li>
         <li th:if="${currentUser} AND ${isAdmin}" class="nav-item"><a class="nav-link" th:href="@{/categories}">Categories</a></li>
