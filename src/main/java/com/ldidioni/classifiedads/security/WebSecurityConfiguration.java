@@ -44,7 +44,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
+            .antMatchers("/ads/{id}/edit").hasRole("ADMIN")
             .antMatchers("/ads/{id}/edit").access("@userService.isSeller(#id)")
+            .antMatchers(HttpMethod.DELETE,"/ads/{id}").hasRole("ADMIN")
             .antMatchers(HttpMethod.DELETE,"/ads/{id}").access("@userService.isSeller(#id)")
             .antMatchers("/tags/**", "/categories/**").hasRole("ADMIN")
             .antMatchers("/ads/new").authenticated()
