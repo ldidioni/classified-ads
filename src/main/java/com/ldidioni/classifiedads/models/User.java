@@ -48,7 +48,7 @@ public class User
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "seller") //TODO: check!!!
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller") //TODO: check!!!
     private List<Ad> ads;
 
     public User(@NotEmpty(message = "*Please provide your username") String username,

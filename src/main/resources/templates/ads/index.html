@@ -57,12 +57,12 @@
                                     </div>
                                     <div class="card-footer" th:if="${currentUser} AND (${isAdmin} OR (${currentUser.id} == ${ad.seller.id}))">
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col text-center">
                                                 <a th:href="@{/ads/{id}/edit(id=${ad.id})}" class="link-light text-decoration-none">
                                                     <button type="button" class="col btn btn-primary">Edit ad</button>
                                                 </a>
                                             </div>
-                                            <div class="col">
+                                            <div class="col text-center">
                                                 <form action="#" th:action="@{/ads/{id}(id=${ad.id})}" th:method="delete">
                                                     <button type="submit" class="btn btn-danger">Delete ad</button>
                                                 </form>

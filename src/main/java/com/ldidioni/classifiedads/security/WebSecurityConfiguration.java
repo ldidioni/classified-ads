@@ -1,5 +1,7 @@
 package com.ldidioni.classifiedads.security;
 
+import com.ldidioni.classifiedads.models.User;
+import com.ldidioni.classifiedads.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private UserService userService;
+
     private final String USERS_QUERY = "select u.username as username, u.password_hash as password, true as enabled from users u where u.username = ?";
     private final String ROLES_QUERY = "select u.username as username, r.name as role from users u inner join users_roles usro on (u.id = usro.user_id) " +
                                        "inner join roles r on (usro.role_id = r.id) where u.username = ?";
@@ -44,9 +49,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-            .antMatchers("/ads/{id}/edit").hasRole("ADMIN")
+            .antMatchers("/ads/*/edit").hasRole("ADMIN")
             .antMatchers("/ads/{id}/edit").access("@userService.isSeller(#id)")
-            .antMatchers(HttpMethod.DELETE,"/ads/{id}").hasRole("ADMIN")
+            .antMatchers(HttpMethod.DELETE,"/ads/*").hasRole("ADMIN")
             .antMatchers(HttpMethod.DELETE,"/ads/{id}").access("@userService.isSeller(#id)")
             .antMatchers("/tags/**", "/categories/**").hasRole("ADMIN")
             .antMatchers("/ads/new").authenticated()

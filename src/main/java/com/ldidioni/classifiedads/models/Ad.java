@@ -28,7 +28,7 @@ public class Ad
     @NotNull(message = "*Please provide a price")
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="seller_id")
     private User seller;
 

@@ -54,10 +54,10 @@ public class UserService
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
 	}
-
+/*
 	public boolean isSeller(int adId) {
 
 		String username = adRepository.getOne(adId).getSeller().getUsername();
 		return getCurrentUsername() == username;
-	}
+	}*/
 }
