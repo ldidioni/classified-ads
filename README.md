@@ -32,4 +32,4 @@ This database comes with the following users:
 
 The database schema is as follows:
 
-[DB Schema](https://github.com/ldidioni/classified-ads/blob/main/src/main/resources/classified_ads_schema.png)
+![DB Schema](https://github.com/ldidioni/classified-ads/blob/main/src/main/resources/classified_ads_schema.png)
