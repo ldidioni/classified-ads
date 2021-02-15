@@ -1,7 +1,5 @@
 package com.ldidioni.classifiedads.security;
 
-import com.ldidioni.classifiedads.models.User;
-import com.ldidioni.classifiedads.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,7 +12,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -24,9 +21,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private UserService userService;
 
     private final String USERS_QUERY = "select u.username as username, u.password_hash as password, true as enabled from users u where u.username = ?";
     private final String ROLES_QUERY = "select u.username as username, r.name as role from users u inner join users_roles usro on (u.id = usro.user_id) " +
@@ -49,10 +43,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-            .antMatchers("/ads/*/edit").hasRole("ADMIN")
-            .antMatchers("/ads/{id}/edit").access("@userService.isSeller(#id)")
-            .antMatchers(HttpMethod.DELETE,"/ads/*").hasRole("ADMIN")
-            .antMatchers(HttpMethod.DELETE,"/ads/{id}").access("@userService.isSeller(#id)")
+            .antMatchers("/ads/{adId}/edit").access("hasRole(\"ADMIN\") or @userSecurity.isSeller(#adId)")
+            .antMatchers(HttpMethod.DELETE,"/ads/{adId}").access("hasRole(\"ADMIN\") or @userSecurity.isSeller(#adId)")
             .antMatchers("/tags/**", "/categories/**").hasRole("ADMIN")
             .antMatchers("/ads/new").authenticated()
             .antMatchers("/", "/signup", "/ads", "/ads/search").permitAll()
