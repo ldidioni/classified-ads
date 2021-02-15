@@ -18,7 +18,7 @@ Front-end design is achieved thanks to [Bootstrap](https://getbootstrap.com/).
 ## Getting started:
 
 1. Run `classified_ads_schema.sql` in order to set up the database schema.
-2. Run `classified_ads_db.sql` in order to seed the database with data.
+2. Run `classified_ads_data.sql` in order to seed the database with data.
 
 This database comes with the following users:
 
@@ -30,3 +30,6 @@ This database comes with the following users:
 |mike      |mike      | ROLE_USER            |
 |bob       |bob       | ROLE_USER            |
 
+The database schema is as follows:
+
+[DB Schema](https://test.png)
