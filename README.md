@@ -17,8 +17,8 @@ Front-end design is achieved thanks to [Bootstrap](https://getbootstrap.com/).
 
 ## Getting started:
 
-1. Run `classified_ads_schema.sql` in order to set up the database schema.
-2. Run `classified_ads_data.sql` in order to seed the database with data.
+1. Run `classified_ads_schema.sql` as found in the `resources` folder in order to set up the database schema.
+2. Run `classified_ads_data.sql` as found in the `resources` folder in order to seed the database with data.
 
 This database comes with the following users:
 
