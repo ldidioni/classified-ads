@@ -5,6 +5,8 @@ import com.ldidioni.classifiedads.repositories.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service("adService")
 public class AdService
 {
@@ -17,7 +19,7 @@ public class AdService
             existingAd.setDescription(ad.getDescription());
             existingAd.setPrice(ad.getPrice());
             existingAd.setCategory(ad.getCategory());
-            existingAd.setTags(ad.getTags());
+            existingAd.setTags(new HashSet(ad.getTags()));
             existingAd.setPhotos(ad.getPhotos());
             adRepository.save(existingAd);
         });
