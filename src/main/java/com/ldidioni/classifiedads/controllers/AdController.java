@@ -160,7 +160,7 @@ public class AdController
             tag.linkAd(adForm.getAd());
         }
 
-        adRepository.findById(id).ifPresent(existingAd -> adService.update(id, adForm.getAd()));
+        adService.update(id, adForm.getAd());
 
         return "redirect:/ads";
     }
@@ -180,7 +180,9 @@ public class AdController
     public String deleteAd(@PathVariable("id")int id) {
         adRepository.findById(id).ifPresent(ad -> {
 
-            for (Tag tag : ad.getTags())
+            Set<Tag> tags = new HashSet<>(ad.getTags());
+
+            for (Tag tag : tags)
             {
                 tag.removeAd(ad);
             }

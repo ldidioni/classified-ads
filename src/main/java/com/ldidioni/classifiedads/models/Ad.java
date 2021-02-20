@@ -71,8 +71,7 @@ public class Ad
     public Ad(int id,
               @NotEmpty(message = "*Please provide a title") String title,
               @NotEmpty(message = "*Please provide a description") String description,
-              @NotNull(message = "*Please provide a price")
-              double price,
+              @NotNull(message = "*Please provide a price") double price,
               User seller,
               Category category,
               List<Photo> photos,
@@ -107,9 +106,7 @@ public class Ad
         this.description = description;
     }
 
-    public double getPrice() {
-        return price;
-    }
+    public double getPrice() { return price; }
 
     public void setPrice(double price) {
         this.price = price;
@@ -131,9 +128,7 @@ public class Ad
         this.category = category;
     }
 
-    public List<Photo> getPhotos() {
-        return photos;
-    }
+    public List<Photo> getPhotos() { return photos; }
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
