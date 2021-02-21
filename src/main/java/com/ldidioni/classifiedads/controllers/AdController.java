@@ -130,10 +130,16 @@ public class AdController
         User seller = userService.findUserByUsername(userService.getCurrentUsername());
         adForm.getAd().setSeller(seller);
 
-        Ad originalAd = adRepository.getOne(id);
+        adService.update(id, adForm.getAd());
 
         // remove all photos linked to original ad
-        originalAd.getPhotos().clear();
+     /*   List<Photo> copyPhotos = new ArrayList<>(originalAd.getPhotos());
+
+        for(Photo photo : copyPhotos) {
+            originalAd.removePhoto(photo);
+        }*/
+        Ad originalAd = adRepository.getOne(id);
+
         photoRepository.deleteByAd(originalAd);
 
         for (String photoUrl : adForm.getPhotoUrls())
@@ -141,15 +147,15 @@ public class AdController
             if(photoUrl != "")
             {
                 Photo photo = new Photo(photoUrl);
-                photo.setAd(adForm.getAd());
+                photo.setAd(originalAd);
                 photoRepository.save(photo);
             }
         }
 
-        originalAd.getTags().clear();
-
+        //originalAd.getTags().clear();
+        Set<Tag> tags = new HashSet<>(originalAd.getTags());
         // remove all tags linked to original ad and link
-        for (Tag tag : originalAd.getTags())
+        for (Tag tag : tags)
         {
             tag.removeAd(originalAd);
         }
@@ -157,10 +163,10 @@ public class AdController
         // add new tags
         for (Tag tag : adForm.getAd().getTags())
         {
-            tag.linkAd(adForm.getAd());
+            tag.linkAd(originalAd);
         }
 
-        adService.update(id, adForm.getAd());
+
 
         return "redirect:/ads";
     }

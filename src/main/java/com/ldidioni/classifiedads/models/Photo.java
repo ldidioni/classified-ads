@@ -16,7 +16,7 @@ public class Photo
     @NotEmpty(message = "*Please provide the URL of your image")
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ad_id")
     private Ad ad;
 
@@ -45,5 +45,19 @@ public class Photo
 
     public void setAd(Ad ad) {
         this.ad = ad;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Photo))
+            return false;
+        return this.imageUrl != null && this.imageUrl == (((Photo) o).getImageUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

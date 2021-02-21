@@ -141,4 +141,14 @@ public class Ad
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
+    public void addPhoto(Photo photo) {
+        photos.add(photo);
+        photo.setAd(this);
+    }
+
+    public void removePhoto(Photo photo) {
+        photos.remove(photo);
+        photo.setAd(null);
+    }
 }
