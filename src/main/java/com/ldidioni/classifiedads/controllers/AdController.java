@@ -131,42 +131,36 @@ public class AdController
         adForm.getAd().setSeller(seller);
 
         adService.update(id, adForm.getAd());
+        Ad updatedAd = adRepository.getOne(id);
+        // adForm.getAd() does not contain any photo, thus at this point, updatedAd.getPhotos() returns null
 
-        // remove all photos linked to original ad
-     /*   List<Photo> copyPhotos = new ArrayList<>(originalAd.getPhotos());
+        // remove all dangling photos
+        photoRepository.deleteByAd(updatedAd);
 
-        for(Photo photo : copyPhotos) {
-            originalAd.removePhoto(photo);
-        }*/
-        Ad originalAd = adRepository.getOne(id);
-
-        photoRepository.deleteByAd(originalAd);
-
+        // add new photos as found in adform object to the updated ad
         for (String photoUrl : adForm.getPhotoUrls())
         {
             if(photoUrl != "")
             {
                 Photo photo = new Photo(photoUrl);
-                photo.setAd(originalAd);
+                photo.setAd(updatedAd);
                 photoRepository.save(photo);
             }
         }
 
-        //originalAd.getTags().clear();
-        Set<Tag> tags = new HashSet<>(originalAd.getTags());
-        // remove all tags linked to original ad and link
+        // remove all tags which are linked to the ad
+        Set<Tag> tags = new HashSet<>(updatedAd.getTags());
+
         for (Tag tag : tags)
         {
-            tag.removeAd(originalAd);
+            tag.removeAd(updatedAd);
         }
 
-        // add new tags
+        // only link the tags as found in adform object to the updated ad
         for (Tag tag : adForm.getAd().getTags())
         {
-            tag.linkAd(originalAd);
+            tag.linkAd(updatedAd);
         }
-
-
 
         return "redirect:/ads";
     }
