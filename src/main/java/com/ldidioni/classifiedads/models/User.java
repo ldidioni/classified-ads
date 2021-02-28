@@ -3,14 +3,11 @@ package com.ldidioni.classifiedads.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
-import com.ldidioni.classifiedads.repositories.RoleRepository;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users")
@@ -80,6 +77,7 @@ public class User
     /**
      * Function called every time a new rating is received to update the rating and the number of ratings received
      * @param latestRating
+     * SELLER RATING IS NOT IMPLEMENTED (YET...)
      */
     public void updateRating(double latestRating) {
         this.rating =  (this.rating  * this.ratingsNb + latestRating) / (this.ratingsNb + 1);
