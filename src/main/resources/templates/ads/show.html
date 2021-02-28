@@ -33,8 +33,11 @@
                     <span class="visually-hidden">Next</span>
                 </a>
             </div>
-            <div>Rate seller</div>
-            <!--<form method="POST" th:action="@{/ads/ ${ad.getId()}">
+            <h2>Contact seller</h2>
+            <div th:text="${ad.seller.getEmail()}"></div>
+            <div th:text="${ad.seller.getPhoneNumber()}"></div>
+            <!--<div>Rate seller</div>
+            <form method="POST" th:action="@{/ads/ ${ad.getId()}">
                 <button type="submit" name="submit" value="value">Vote</button>
             </form>
             <div>
