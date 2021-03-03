@@ -172,6 +172,8 @@ public class AdController
         model.put("seller", ad.getSeller());
         model.put("tags", ad.getTags());
         model.put("photos", photoRepository.findByAd(ad));
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
 
         return "ads/show";
     }
