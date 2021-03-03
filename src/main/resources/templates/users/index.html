@@ -29,7 +29,7 @@
                         <td th:text="${user.phoneNumber}"></td>
                         <td><a th:text="'Edit user'" th:href="@{/users/{id}(id=${user.id})}" /></td>
                         <td>
-                            <form action="#" th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
+                            <form th:if="${user.id} != ${currentUser.id}" action="#" th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
                                 <button type="submit" class="btn btn-link" th:text="'Delete user'"></button>
                             </form>
                         </td>
