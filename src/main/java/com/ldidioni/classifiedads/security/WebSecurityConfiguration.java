@@ -45,7 +45,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/ads/{adId}/edit").access("hasRole(\"ADMIN\") or @userSecurity.isSeller(#adId)")
             .antMatchers(HttpMethod.DELETE,"/ads/{adId}").access("hasRole(\"ADMIN\") or @userSecurity.isSeller(#adId)")
-            .antMatchers("/tags/**", "/categories/**").hasRole("ADMIN")
+            .antMatchers("/tags/**", "/categories/**", "/users/**").hasRole("ADMIN")
             .antMatchers("/ads/new").authenticated()
             .antMatchers("/", "/signup", "/ads", "/ads/search").permitAll()
             .and()

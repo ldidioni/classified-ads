@@ -2,11 +2,14 @@ package com.ldidioni.classifiedads.controllers;
 
 import java.util.Map;
 
+import com.ldidioni.classifiedads.models.Tag;
+import com.ldidioni.classifiedads.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 import com.ldidioni.classifiedads.models.User;
@@ -18,6 +21,9 @@ public class UserController
 {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/login")
     public String login(Map<String, Object> model)
@@ -71,5 +77,42 @@ public class UserController
 
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("/users")
+    public String getAllUsers(Map<String, Object> model)
+    {
+        model.put("users", userRepository.findAll());
+        model.put("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.put("isAdmin", userService.isAdmin());
+
+        return "users/index";
+    }
+
+    @GetMapping("/users/{id}")
+    public String seeUser(@PathVariable("id")int id, Model model)
+    {
+        User user = userRepository.getOne(id);
+        model.addAttribute("user", user);
+        model.addAttribute("currentUser", userService.findUserByUsername(userService.getCurrentUsername()));
+        model.addAttribute("isAdmin", userService.isAdmin());
+
+        return "users/form";
+    }
+
+    @PostMapping("/users/{id}")
+    public String updateUser(@PathVariable("id")int id, @ModelAttribute User user)
+    {
+        userRepository.findById(id).ifPresent(existingUser -> userService.update(existingUser.getId(), user));
+
+        return "redirect:/users";
+    }
+
+    @DeleteMapping("/users/{id}")
+    public String deleteUser(@PathVariable("id")int id)
+    {
+        userRepository.findById(id).ifPresent(user -> userRepository.delete(user));
+
+        return "redirect:/users";
     }
 }

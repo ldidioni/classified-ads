@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="fragments/header.html"></div>
+    <body>
+        <div class="container mt-sm-3">
+            <div th:replace="fragments/navigation.html"></div>
+            <h1 th:text="${category.id} ? 'Update category with id #' + ${category.id} : 'Create a new category'"></h1>
+            <form th:action="${category.id} ? @{/categories/{id}(id=${category.id})} : @{/categories/new}" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" id="name" name="name" class="form-control"
+                           th:placeholder="${category.name} ?: 'Enter a name for the category'" th:value="${category.name} ?: ''" required/>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="${category.id} ? 'Update category' : 'Create category'"></button>
+            </form>
+            <div th:replace="fragments/footer.html"></div>
+        </div>
+    </body>
+</html>
