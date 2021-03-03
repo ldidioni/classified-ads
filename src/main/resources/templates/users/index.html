@@ -10,15 +10,15 @@
                     Here admins can visualize all users of the application and delete them.
                 </p>
             </div>
-            <table>
-                <thead>
+            <table class="table table-hover">
+                <thead class="table-light">
                     <tr>
                         <th>id</th>
-                        <th>username</th>
-                        <th>e-mail</th>
-                        <th>rating</th>
-                        <th>number of ratings</th>
-                        <th>delete</th>
+                        <th>Username</th>
+                        <th>E-mail</th>
+                        <th>Phone number</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,11 +26,11 @@
                         <td th:text="${user.id}"></td>
                         <td th:text="${user.username}"></td>
                         <td th:text="${user.email}"></td>
-                        <td th:text="${user.rating}"></td>
-                        <td th:text="${user.ratingsNb}"></td>
+                        <td th:text="${user.phoneNumber}"></td>
+                        <td><a th:text="'Edit user'" th:href="@{/users/{id}(id=${user.id})}" /></td>
                         <td>
-                            <form method="POST" th:action="@{/users/ ${user.id}">
-                                <button type="submit" name="submit" value="value">Delete user</button>
+                            <form action="#" th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
+                                <button type="submit" class="btn btn-link" th:text="'Delete user'"></button>
                             </form>
                         </td>
                     </tr>

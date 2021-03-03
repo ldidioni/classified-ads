@@ -4,14 +4,29 @@
     <body>
         <div class="container mt-sm-3">
             <div th:replace="fragments/navigation.html"></div>
-            <h1 th:text="${category.id} ? 'Update category with id #' + ${category.id} : 'Create a new category'"></h1>
-            <form th:action="${category.id} ? @{/categories/{id}(id=${category.id})} : @{/categories/new}" method="post">
+            <h1 th:text="'Update user with id #' + ${user.id}"></h1>
+            <form th:action="@{/users/{id}(id=${user.id})}" method="post">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" class="form-control"
-                           th:placeholder="${category.name} ?: 'Enter a name for the category'" th:value="${category.name} ?: ''" required/>
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control"
+                           th:placeholder="${user.username}" th:value="${user.username}" required/>
                 </div>
-                <button type="submit" class="btn btn-primary" th:text="${category.id} ? 'Update category' : 'Create category'"></button>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail:</label>
+                    <input type="text" id="email" name="email" class="form-control"
+                           th:placeholder="${user.email}" th:value="${user.email}" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Phone number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+                           th:placeholder="${user.phoneNumber}" th:value="${user.phoneNumber}" required/>
+                </div>
+                <!--<div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="text" id="password" name="password" class="form-control"
+                           th:value="${user.password}"/>
+                </div>-->
+                <button type="submit" class="btn btn-primary" th:text="'Update user'"></button>
             </form>
             <div th:replace="fragments/footer.html"></div>
         </div>
