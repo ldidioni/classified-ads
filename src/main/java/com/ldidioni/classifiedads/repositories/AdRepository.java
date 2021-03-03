@@ -1,9 +1,11 @@
 package com.ldidioni.classifiedads.repositories;
 
 import com.ldidioni.classifiedads.models.Ad;
+import com.ldidioni.classifiedads.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,4 +25,9 @@ public interface AdRepository extends JpaRepository<Ad, Integer>
     List<Ad> findCustomWithTags(@Param("query") String query,
                                 @Param("categoryName") String categoryName,
                                 @Param("tagNames") List<String> tagNames);
+
+    List<Ad> findBySeller(User seller);
+
+    @Transactional
+    long deleteBySeller(User seller);
 }

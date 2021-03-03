@@ -1,8 +1,15 @@
 package com.ldidioni.classifiedads.controllers;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import com.ldidioni.classifiedads.models.Ad;
+import com.ldidioni.classifiedads.models.Role;
 import com.ldidioni.classifiedads.models.Tag;
+import com.ldidioni.classifiedads.repositories.AdRepository;
+import com.ldidioni.classifiedads.repositories.PhotoRepository;
 import com.ldidioni.classifiedads.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +30,12 @@ public class UserController
     private UserService userService;
 
     @Autowired
+    PhotoRepository photoRepository;
+    @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AdRepository adRepository;
 
     @GetMapping("/login")
     public String login(Map<String, Object> model)
@@ -111,7 +123,32 @@ public class UserController
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id")int id)
     {
-        userRepository.findById(id).ifPresent(user -> userRepository.delete(user));
+        userRepository.findById(id).ifPresent(user -> {
+
+            List<Ad> ads = adRepository.findBySeller(user);
+
+            for (Ad ad : ads) {
+
+                Set<Tag> tags = new HashSet<>(ad.getTags());
+
+                for (Tag tag : tags)
+                {
+                    tag.removeAd(ad);
+                }
+                photoRepository.deleteByAd(ad);
+            }
+
+            adRepository.deleteBySeller(user);
+
+            Set<Role> roles = new HashSet<>(user.getRoles());
+
+            for (Role role : roles)
+            {
+                role.removeUser(user);
+            }
+
+            userRepository.delete(user);
+        });
 
         return "redirect:/users";
     }
