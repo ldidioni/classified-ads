@@ -1,7 +1,7 @@
 # classified-ads
 
 Classified ads project based on the [Spring framework](https://spring.io/) for MAS-RAD CAS DAR Module *Frameworks*.
-Front-end design is achieved thanks to [Bootstrap](https://getbootstrap.com/).
+Front-end design uses [Bootstrap](https://getbootstrap.com/).
 
 ## Features:
 
@@ -18,8 +18,9 @@ Front-end design is achieved thanks to [Bootstrap](https://getbootstrap.com/).
 
 ## Getting started:
 
-1. Run `classified_ads_schema.sql` as found in the `resources` folder in order to set up the database schema.
-2. Run `classified_ads_data.sql` as found in the `resources` folder in order to seed the database with data.
+1. Update the database-related properties stored in `resources/application.properties` to those of your environment.
+2. Run `classified_ads_schema.sql` as found in the `resources` folder in order to set up the database schema.
+3. Run `classified_ads_data.sql` as found in the `resources` folder in order to seed the database with data.
 
 This database comes with the following users:
 
